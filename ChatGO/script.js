@@ -109,47 +109,25 @@ async function sendMessage(text = null) {
 
 
 /* =========================================
-   GEMINI API
+   Groq API
 ========================================= */
 
 async function askGroq(message) {
 
-    const url =
-        "https://api.groq.com/openai/v1/chat/completions";
+    const response = await fetch(
+        "/.netlify/functions/chat",
+        {
+            method: "POST",
 
-    const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${GROQ_API_KEY}`
-        },
-
-        body: JSON.stringify({
-
-            model: GROQ_MODEL,
-
-            messages: [
-                {
-                    role: "system",
-                    content:
-                        "You are ChatGO, a helpful, intelligent and friendly AI assistant. Give clear and accurate answers. Keep simple questions concise. For technical questions, provide useful explanations and examples."
-                },
-
-                {
-                    role: "user",
-                    content: message
-                }
-            ],
-
-            temperature: 0.7,
-
-            max_tokens: 2048,
-
-            stream: true
-        })
-    });
+            body: JSON.stringify({
+                message: message
+            })
+        }
+    );
 
 
     if (!response.ok) {
@@ -158,8 +136,24 @@ async function askGroq(message) {
             await response.json();
 
         throw new Error(
-            errorData?.error?.message ||
-            `Groq API Error: ${response.status}`
+            errorData?.error ||
+            `ChatGO server error: ${response.status}`
+        );
+    }
+
+
+    const data =
+        await response.json();
+
+
+    const fullResponse =
+        data.response;
+
+
+    if (!fullResponse) {
+
+        throw new Error(
+            "ChatGO received an empty response."
         );
     }
 
@@ -198,87 +192,12 @@ async function askGroq(message) {
     chatContainer.appendChild(messageElement);
 
 
-    // Read stream
-    const reader =
-        response.body.getReader();
-
-    const decoder =
-        new TextDecoder();
-
-    let buffer = "";
-
-    let fullResponse = "";
+    // Render Markdown
+    content.innerHTML =
+        marked.parse(fullResponse);
 
 
-    while (true) {
-
-        const { value, done } =
-            await reader.read();
-
-        if (done) break;
-
-
-        buffer +=
-            decoder.decode(value, {
-                stream: true
-            });
-
-
-        const lines =
-            buffer.split("\n");
-
-        buffer =
-            lines.pop();
-
-
-        for (const line of lines) {
-
-            if (!line.startsWith("data:")) {
-                continue;
-            }
-
-
-            const data =
-                line.substring(5).trim();
-
-
-            if (data === "[DONE]") {
-                continue;
-            }
-
-
-            try {
-
-                const json =
-                    JSON.parse(data);
-
-
-                const text =
-                    json?.choices?.[0]
-                        ?.delta
-                        ?.content;
-
-
-                if (text) {
-
-                    fullResponse += text;
-
-                    content.innerHTML = marked.parse(fullResponse);
-
-                    scrollToBottom();
-                }
-
-
-            } catch (error) {
-
-                console.warn(
-                    "Stream parsing error:",
-                    error
-                );
-
-            }
-        }
-    }
+    scrollToBottom();
 
 
     // Copy button
