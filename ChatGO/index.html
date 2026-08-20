@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ChatGO — AI Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="logo">
+                <span>✦</span>
+            </div>
+
+            <div class="brand-name">
+                Chat<span>GO</span>
+            </div>
+
+            <button class="close-sidebar" id="closeSidebar">×</button>
+        </div>
+
+        <button class="new-chat" id="newChat">
+            <span>＋</span>
+            New Chat
+        </button>
+
+        <div class="sidebar-title">
+            RECENT CHATS
+        </div>
+
+        <div class="chat-list" id="chatList">
+            <div class="chat-item active">
+                <div class="chat-icon">✦</div>
+
+                <div class="chat-info">
+                    <div>Welcome to ChatGO</div>
+                    <small>Just now</small>
+                </div>
+
+                <button class="chat-more">⋮</button>
+            </div>
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <button class="sidebar-button" id="clearChats">
+                <span>⌫</span>
+                Clear Conversations
+            </button>
+
+            <button class="sidebar-button" id="aboutChatGO">
+                <span>ⓘ</span>
+                About ChatGO
+            </button>
+
+        </div>
+
+        <div class="profile">
+            <div class="avatar">👤</div>
+
+            <div class="profile-info">
+                <strong>USER</strong>
+                <small>Online</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <button class="mobile-menu" id="mobileMenu">
+                ☰
+            </button>
+
+            <div class="conversation-title">
+                <div class="mini-logo">✦</div>
+
+                <div>
+                    <strong>ChatGO</strong>
+                    <small>AI Assistant</small>
+                </div>
+            </div>
+
+            <button class="top-action" id="clearCurrent">
+                ⌫
+            </button>
+
+        </header>
+
+
+        <!-- CHAT -->
+        <section class="chat-container" id="chatContainer">
+
+            <!-- WELCOME -->
+            <div class="welcome" id="welcome">
+
+                <div class="welcome-logo">
+                    ✦
+                </div>
+
+                <h1>
+                    How can I help you?
+                </h1>
+
+                <p>
+                    Ask anything. Learn something new, solve problems,
+                    write code, or simply have a conversation.
+                </p>
+
+                <div class="suggestions">
+
+                    <button class="suggestion" data-message="Explain artificial intelligence in simple terms">
+                        <span>✦</span>
+                        Explain AI simply
+                    </button>
+
+                    <button class="suggestion" data-message="Write a Python program to calculate factorial">
+                        <span>⌘</span>
+                        Help me code
+                    </button>
+
+                    <button class="suggestion" data-message="Give me some interesting technology facts">
+                        <span>◈</span>
+                        Interesting facts
+                    </button>
+
+                    <button class="suggestion" data-message="Help me create a professional resume">
+                        <span>✎</span>
+                        Help with writing
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INPUT -->
+        <div class="input-area">
+
+            <div class="input-wrapper">
+
+                <textarea
+                    id="messageInput"
+                    placeholder="Message ChatGO..."
+                    rows="1"
+                ></textarea>
+
+                <button class="send-button" id="sendButton">
+                    <span>➤</span>
+                </button>
+
+            </div>
+
+            <div class="disclaimer">
+                ChatGO can make mistakes. Check important information.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- MOBILE OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<div id="aboutOverlay" class="about-overlay">
+
+    <div class="about-modal">
+
+        <button id="aboutClose" class="about-close"> &times;
+        </button>
+
+        <div class="about-logo">
+            ✦
+        </div>
+
+        <h2>Chat<span>GO</span></h2>
+
+        <p class="about-tagline">
+            Your AI assistant
+        </p>
+
+        <div class="about-line"></div>
+
+        <p class="about-description">
+            ChatGO is a modern AI-powered chatbot designed by Rumman to provide
+            fast, helpful and intelligent responses through a clean,
+            simple and distraction-free interface.
+        </p>
+
+        <div class="about-info">
+
+            <div class="about-item">
+                <span>✦</span>
+                <div>
+                    <strong>AI Powered</strong>
+                    <small>Powered by advanced AI models</small>
+                </div>
+            </div>
+
+            <div class="about-item">
+                <span>⚡</span>
+                <div>
+                    <strong>Fast & Responsive</strong>
+                    <small>Built for smooth conversations</small>
+                </div>
+            </div>
+
+            <div class="about-item">
+                <span>◈</span>
+                <div>
+                    <strong>Simple Design</strong>
+                    <small>Clean interface with a dark aesthetic</small>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="about-bottom">
+            <span>ChatGO</span>
+            <span>v1.0</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
